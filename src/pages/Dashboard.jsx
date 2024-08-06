@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import CampaignTable from '../components/CampaignTable';
 import CampaignChart from '../components/CampaignChart';
 import { mockCampaignData } from '../lib/mockData';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [dataSource, setDataSource] = useState('all');
   const campaigns = mockCampaignData;
 
   const handleLogout = () => {
@@ -23,6 +26,18 @@ const Dashboard = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Campaign Dashboard</h1>
         <Button onClick={handleLogout}>Back to Home</Button>
+      </div>
+      <div className="mb-4">
+        <Select value={dataSource} onValueChange={setDataSource}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select data source" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Sources</SelectItem>
+            <SelectItem value="meta">Meta</SelectItem>
+            <SelectItem value="gads">Google Ads</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
